@@ -1,27 +1,17 @@
-import {Button, Modal} from "react-bootstrap";
+import {Button} from "react-bootstrap";
 import {useState} from "react";
-import {LocationSearch} from "../components/LocationSearch";
+import {LocationSearchPopup} from "../components/LocationSearchPopup";
 
 export function DayWeather() {
-    const [show, setShow] = useState(true);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const [showSearch, setShowSearch] = useState(true);
 
     return (
         <>
-            <Button variant="primary" onClick={handleShow}>
+            <Button variant="primary" onClick={() => setShowSearch(!showSearch)}>
                 Launch demo modal
             </Button>
 
-            <Modal show={show} onHide={handleClose} >
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                    <LocationSearch onSubmit={() => {}} />
-                <Modal.Footer>
-                </Modal.Footer>
-            </Modal>
+            <LocationSearchPopup show={showSearch} setShow={setShowSearch} />
         </>
     );
 }
