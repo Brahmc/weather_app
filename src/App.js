@@ -3,11 +3,15 @@ import 'normalize.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {DayWeatherPage} from "./pages/DayWeatherPage";
 import {SearchPage} from "./pages/SearchPage";
+import {LocationProvider} from "./contexts/locationContext";
 
 
 function App() {
   return (
-    <SearchPage />
+      <LocationProvider>
+          <SearchPage />
+          <DayWeatherPage />
+      </LocationProvider>
   );
 }
 

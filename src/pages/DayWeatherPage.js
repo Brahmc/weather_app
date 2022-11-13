@@ -2,9 +2,13 @@ import {Button} from "react-bootstrap";
 import {useState} from "react";
 import {LocationSearch} from "../components/LocationSearch";
 import {SearchModal} from "../components/SearchModal";
+import {useLocationContext} from "../contexts/locationContext";
 
 export function DayWeatherPage() {
-    const [showSearch, setShowSearch] = useState(true);
+    const {location} = useLocationContext();
+    const [showSearch, setShowSearch] = useState(false);
+    if(location === undefined) return;
+
 
     return (
         <>
