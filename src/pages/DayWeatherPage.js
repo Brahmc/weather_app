@@ -45,7 +45,7 @@ export function DayWeatherPage() {
             <h1>{location.place_name}</h1>
             <span>{date.toDateString()}</span>
             <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
-                <LocationSearch />
+                <LocationSearch onSearch={() => setShowSearch(false)} />
             </SearchModal>
         </Container>
     );

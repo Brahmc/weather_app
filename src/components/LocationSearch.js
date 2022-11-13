@@ -2,7 +2,7 @@ import {Container, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {useLocationContext} from "../contexts/locationContext";
 
-export function LocationSearch() {
+export function LocationSearch({onSearch}) {
     const[search, setSearch] = useState("");
     const [locations, setLocations] = useState(undefined);
     const {setLocation} = useLocationContext();
@@ -17,11 +17,16 @@ export function LocationSearch() {
             .then(data => {setLocations(data.features) ;console.log(data)});
     }, [search, setLocations]);
 
+    function searchLocation(location) {
+        if(onSearch) onSearch();
+        setLocation(location);
+    }
+
     return (
         <Container style={{textAlign: "left"}}>
-            <Form onSubmit={(e) => {e.preventDefault(); setLocation(locations[0])}}>
+            <Form onSubmit={(e) => {e.preventDefault(); searchLocation(locations[0])}}>
                 <Form.Control className='ps-3' value={search} placeholder='Search for location' onChange={e => setSearch(e.target.value)} />
-                <PlaceSuggestions locations={locations} onClick={(l) => setLocation(l)}/>
+                <PlaceSuggestions locations={locations} onClick={(l) => searchLocation(l)}/>
             </Form>
 
         </Container>
