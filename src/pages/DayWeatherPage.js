@@ -73,7 +73,8 @@ export function DayWeatherPage() {
 }
 
 function formatDate(date) {
-    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    const zeroFormat = n => n < 10 ? "0" + n : n;
+    return date.getFullYear() + "-" + zeroFormat(date.getMonth() + 1) + "-" + zeroFormat(date.getDate());
 }
 
 function DayWeatherData({weatherData}) {
