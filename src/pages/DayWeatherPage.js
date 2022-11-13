@@ -1,8 +1,9 @@
 import {Button} from "react-bootstrap";
 import {useState} from "react";
-import {LocationSearchPopup} from "../components/LocationSearchPopup";
+import {LocationSearch} from "../components/LocationSearch";
+import {SearchModal} from "../components/SearchModal";
 
-export function DayWeather() {
+export function DayWeatherPage() {
     const [showSearch, setShowSearch] = useState(true);
 
     return (
@@ -10,8 +11,10 @@ export function DayWeather() {
             <Button variant="primary" onClick={() => setShowSearch(!showSearch)}>
                 Launch demo modal
             </Button>
+            <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
+                <LocationSearch />
+            </SearchModal>
 
-            <LocationSearchPopup show={showSearch} setShow={setShowSearch} />
         </>
     );
 }

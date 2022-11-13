@@ -1,7 +1,7 @@
-import {Container, Form, Modal} from "react-bootstrap";
+import {Container, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 
-export function LocationSearchPopup({onSubmit, show, setShow}) {
+export function LocationSearch({onSubmit}) {
     const[search, setSearch] = useState("");
     const [places, setPlaces] = useState(undefined);
 
@@ -16,12 +16,10 @@ export function LocationSearchPopup({onSubmit, show, setShow}) {
     }, [search, setPlaces]);
 
     return (
-        <SearchModal title='Search' show={show} setShow={setShow}>
-            <Container>
-                <Form.Control value={search} onChange={e => setSearch(e.target.value)} />
-                <PlaceSuggestions places={places} onClick={(p) => onSubmit(p)}/>
-            </Container>
-        </SearchModal>
+        <Container>
+            <Form.Control value={search} onChange={e => setSearch(e.target.value)} />
+            <PlaceSuggestions places={places} onClick={(p) => onSubmit(p)}/>
+        </Container>
     );
 }
 
@@ -29,16 +27,3 @@ function PlaceSuggestions({places, onClick}) {
     return places?.map((p, index) => <div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className='ps-3 p-2' onClick={() => onClick(p)} key={index}>{p.matching_place_name ? p.matching_place_name + " (" + p.place_name + ")" : p.place_name}</div>)
 }
 
-function SearchModal({title, show, setShow, children}) {
-    const handleClose = () => setShow(false);
-
-    return (
-        <Modal show={show} onHide={handleClose} >
-            <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
-            {children}
-            <Modal.Footer />
-        </Modal>
-    )
-}
