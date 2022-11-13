@@ -1,4 +1,4 @@
-import {Button, Container} from "react-bootstrap";
+import {Button, Col, Container, Row} from "react-bootstrap";
 import {useEffect, useState} from "react";
 import {LocationSearch} from "../components/LocationSearch";
 import {SearchModal} from "../components/SearchModal";
@@ -22,7 +22,7 @@ export function DayWeatherPage() {
                 'x-rapidapi-key': process.env.REACT_APP_METEOSTAT_X_RAPID_API_KEY
             }
         }
-        console.log(formatDate(date));
+
         fetch("https://meteostat.p.rapidapi.com/point/hourly?" + new URLSearchParams({
             lat: location.center[1],
             lon: location.center[0],
@@ -32,7 +32,7 @@ export function DayWeatherPage() {
             tz: "Europe/Berlin"
         }), options)
             .then(response => response.json())
-            .then(data => {setLocationWeather(data.data); console.log(data)});
+            .then(data => {setLocationWeather(data); console.log(data)});
 
     }, [date, location]);
     if(location === undefined) return;
@@ -44,6 +44,8 @@ export function DayWeatherPage() {
             </Button>
             <h1>{location.place_name}</h1>
             <span>{date.toDateString()}</span>
+            <DayWeatherData weatherData={locationWeather?.data} />
+
             <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
                 <LocationSearch onSearch={() => setShowSearch(false)} />
             </SearchModal>
@@ -53,5 +55,26 @@ export function DayWeatherPage() {
 
 function formatDate(date) {
     return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+}
+
+function DayWeatherData({weatherData}) {
+    return (
+        <>
+            {weatherData?.map(d =>
+                <Row key={d.time} className='p-2'>
+                    <Col>{(new Date(d.time).getHours())}</Col>
+                    <WeatherDataPoint title='temp' value={d.temp + '°C'}/>
+                </Row>
+            )}
+        </>
+    )
+}
+
+function WeatherDataPoint({value}) {
+    return (
+        <Col>
+            <Row>{value}</Row>
+        </Col>
+    )
 }
 
