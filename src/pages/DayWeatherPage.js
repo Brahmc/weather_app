@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import {LocationSearch} from "../components/LocationSearch";
 import {SearchModal} from "../components/SearchModal";
 import {useLocationContext} from "../contexts/locationContext";
+import {CiLocationArrow1} from "react-icons/ci";
 
 export function DayWeatherPage() {
     const {location} = useLocationContext();
@@ -54,7 +55,7 @@ export function DayWeatherPage() {
 }
 
 function formatDate(date) {
-    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
+    return date.getFullYear() + "-" + date.getMonth() + "-" + (~~date.getDate() +1);
 }
 
 function DayWeatherData({weatherData}) {
@@ -62,18 +63,21 @@ function DayWeatherData({weatherData}) {
         <>
             {weatherData?.map(d =>
                 <Row key={d.time} className='p-2'>
-                    <Col>{(new Date(d.time).getHours())}</Col>
-                    <WeatherDataPoint title='temp' value={d.temp + '°C'}/>
+                    <WeatherDataPoint value={(new Date(d.time).getHours())} width={1} />
+                    <WeatherDataPoint value={<CiLocationArrow1 style={{transform: `rotate(${d.wdir -45}deg)`}} />} width={1} />
+                    <WeatherDataPoint value={`${d.wspd} km/h`} note={d.wpgt ? `max ${d.wpgt} km/h` : ''} />
+                    <WeatherDataPoint title='temp' value={d.temp + '°C'} note={`${d.pres} hPa`}/>
                 </Row>
             )}
         </>
     )
 }
 
-function WeatherDataPoint({value}) {
+function WeatherDataPoint({value, note, style, width}) {
     return (
-        <Col>
-            <Row>{value}</Row>
+        <Col xs={width ? width : 5} style={style} className='d-flex justify-content-center flex-column'>
+            {note ? <Row>{value}</Row> : value}
+            {note ? <Row style={{fontSize: ".7em"}}>{note}</Row> : ''}
         </Col>
     )
 }
