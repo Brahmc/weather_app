@@ -8,6 +8,7 @@ export function DayWeatherPage() {
     const {location} = useLocationContext();
     const [showSearch, setShowSearch] = useState(false);
     const [locationWeather, setLocationWeather] = useState(undefined);
+    const [date, setDate] = useState(new Date());
 
     useEffect(()  => {
         if(location === undefined) {
@@ -15,21 +16,26 @@ export function DayWeatherPage() {
             return;
         }
 
-            const options = {
-                headers: {
-                    'x-rapidapi-host': 'meteostat.p.rapidapi.com',
-                    'x-rapidapi-key': process.env.REACT_APP_METEOSTAT_X_RAPID_API_KEY
-                }
+        const options = {
+            headers: {
+                'x-rapidapi-host': 'meteostat.p.rapidapi.com',
+                'x-rapidapi-key': process.env.REACT_APP_METEOSTAT_X_RAPID_API_KEY
             }
+        }
 
-            fetch("https://meteostat.p.rapidapi.com/point/hourly?lat=" + location.center[1] + "&lon=" + location.center[0] +"&start=2020-01-01&end=2020-01-01&alt=113&tz=Europe%2FBerlin", options)
-                .then(response => response.json())
-                .then(data => {setLocationWeather(data.data); console.log(data)});
+        fetch("https://meteostat.p.rapidapi.com/point/hourly?" + new URLSearchParams({
+            lat: location.center[1],
+            lon: location.center[0],
+            start: '2020-01-01',
+            end: '2020-01-01',
+            alt: '113',
+            tz: "Europe/Berlin"
+        }), options)
+            .then(response => response.json())
+            .then(data => {setLocationWeather(data.data); console.log(data)});
+
     }, [location]);
     if(location === undefined) return;
-
-
-
 
     return (
         <>
@@ -42,5 +48,9 @@ export function DayWeatherPage() {
             </SearchModal>
         </>
     );
+}
+
+function formatDate(date) {
+    return date.month + "-" + date.day + "-" + date.year;
 }
 
