@@ -35,7 +35,7 @@ export function LocationSearch({onSearch}) {
 
 function PlaceSuggestions({locations, onClick}) {
     return (
-    <div style={{whiteSpace: "nowrap"}}>
+    <div style={{whiteSpace: "nowrap", borderColor: "grey"}} className={'border border-top-0 rounded ' + (locations ? '' : 'border-bottom-0')}>
         {locations?.map((l, index) =>
             <div style={{overflow: "hidden", textOverflow: "ellipsis"}}
                  className='ps-3 p-2'
