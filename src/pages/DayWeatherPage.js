@@ -14,7 +14,6 @@ export function DayWeatherPage() {
             <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
                 <LocationSearch />
             </SearchModal>
-
         </>
     );
 }

@@ -16,14 +16,17 @@ export function LocationSearch({onSubmit}) {
     }, [search, setPlaces]);
 
     return (
-        <Container>
-            <Form.Control value={search} onChange={e => setSearch(e.target.value)} />
+        <Container style={{textAlign: "left"}}>
+            <Form.Control className='ps-3' value={search} placeholder='Search for location' onChange={e => setSearch(e.target.value)} />
             <PlaceSuggestions places={places} onClick={(p) => onSubmit(p)}/>
         </Container>
     );
 }
 
 function PlaceSuggestions({places, onClick}) {
-    return places?.map((p, index) => <div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className='ps-3 p-2' onClick={() => onClick(p)} key={index}>{p.matching_place_name ? p.matching_place_name + " (" + p.place_name + ")" : p.place_name}</div>)
+    return (
+    <div style={{whiteSpace: "nowrap"}}>
+        {places?.map((p, index) => <div style={{overflow: "hidden", textOverflow: "ellipsis"}} className='ps-3 p-2' onClick={() => onClick(p)} key={index}>{p.matching_place_name ? p.matching_place_name + " (" + p.place_name + ")" : p.place_name}</div>)}
+    </div>);
 }
 
