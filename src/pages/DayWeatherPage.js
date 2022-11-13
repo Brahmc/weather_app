@@ -3,7 +3,8 @@ import {useEffect, useState} from "react";
 import {LocationSearch} from "../components/LocationSearch";
 import {SearchModal} from "../components/SearchModal";
 import {useLocationContext} from "../contexts/locationContext";
-import {CiLocationArrow1} from "react-icons/ci";
+import {WiDirectionUp} from "react-icons/wi";
+import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
 
 export function DayWeatherPage() {
     const {location} = useLocationContext();
@@ -38,12 +39,29 @@ export function DayWeatherPage() {
     }, [date, location]);
     if(location === undefined) return;
 
+    function addDays(days) {
+        const result = new Date(date);
+        result.setDate(result.getDate() + days);
+        setDate(result);
+    }
+
     return (
         <Container>
-            <Button variant="primary" onClick={() => setShowSearch(!showSearch)}>
-                Search
-            </Button>
             <h1>{location.place_name}</h1>
+
+
+            <Col className='d-flex flex-row'>
+                <Button className='me-2' onClick={() => addDays(-1)}>
+                    <FaArrowLeft />
+                </Button>
+                <Button className='me-2' onClick={() => addDays(1)}>
+                    <FaArrowRight />
+                </Button>
+                <Button className='me-2' variant="primary" onClick={() => setShowSearch(!showSearch)}>
+                    Search
+                </Button>
+            </Col>
+
             <span>{date.toDateString()}</span>
             <DayWeatherData weatherData={locationWeather?.data} />
 
@@ -55,7 +73,7 @@ export function DayWeatherPage() {
 }
 
 function formatDate(date) {
-    return date.getFullYear() + "-" + date.getMonth() + "-" + (~~date.getDate() +1);
+    return date.getFullYear() + "-" + date.getMonth() + "-" + date.getDate();
 }
 
 function DayWeatherData({weatherData}) {
@@ -64,7 +82,7 @@ function DayWeatherData({weatherData}) {
             {weatherData?.map(d =>
                 <Row key={d.time} className='p-2'>
                     <WeatherDataPoint value={(new Date(d.time).getHours())} width={1} />
-                    <WeatherDataPoint value={<CiLocationArrow1 style={{transform: `rotate(${d.wdir -45}deg)`}} />} width={1} />
+                    <WeatherDataPoint value={<WiDirectionUp style={{transform: `rotate(${d.wdir}deg)`}} />} width={1} />
                     <WeatherDataPoint value={`${d.wspd} km/h`} note={d.wpgt ? `max ${d.wpgt} km/h` : ''} />
                     <WeatherDataPoint title='temp' value={d.temp + '°C'} note={`${d.pres} hPa`}/>
                 </Row>
