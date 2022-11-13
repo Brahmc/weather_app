@@ -18,14 +18,8 @@ export function DayWeather() {
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-                    <LocationSearch />
+                    <LocationSearch onSubmit={() => {}} />
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={handleClose}>
-                        Save Changes
-                    </Button>
                 </Modal.Footer>
             </Modal>
         </>

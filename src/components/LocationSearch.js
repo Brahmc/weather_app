@@ -1,4 +1,4 @@
-import {Form} from "react-bootstrap";
+import {Container, Form} from "react-bootstrap";
 import {useEffect, useState} from "react";
 
 export function LocationSearch({onSubmit}) {
@@ -16,13 +16,13 @@ export function LocationSearch({onSubmit}) {
     }, [search, setPlaces]);
 
     return (
-        <>
+        <Container>
             <Form.Control value={search} onChange={e => setSearch(e.target.value)} />
             <PlaceSuggestions places={places} onClick={(p) => onSubmit(p)}/>
-        </>
+        </Container>
     );
 }
 
 function PlaceSuggestions({places, onClick}) {
-    return places?.map((p, index) => <div onClick={onClick(p)} key={index}>{p.matching_place_name ? p.matching_place_name + " (" + p.place_name + ")" : p.place_name}</div>)
+    return places?.map((p, index) => <div style={{whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis"}} className='ps-3 p-2' onClick={onClick(p)} key={index}>{p.matching_place_name ? p.matching_place_name + " (" + p.place_name + ")" : p.place_name}</div>)
 }
