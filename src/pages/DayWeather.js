@@ -1,5 +1,6 @@
-import {Button, Form, Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
 import {useState} from "react";
+import {LocationSearch} from "../components/LocationSearch";
 
 export function DayWeather() {
     const [show, setShow] = useState(true);
@@ -17,9 +18,7 @@ export function DayWeather() {
                 <Modal.Header closeButton>
                     <Modal.Title>Modal heading</Modal.Title>
                 </Modal.Header>
-                <Form>
-                    <Form.Control></Form.Control>
-                </Form>
+                    <LocationSearch />
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
@@ -32,3 +31,4 @@ export function DayWeather() {
         </>
     );
 }
+
