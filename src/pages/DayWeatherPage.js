@@ -66,7 +66,7 @@ export function DayWeatherPage() {
             <DayWeatherData weatherData={locationWeather?.data} />
 
             <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
-                <LocationSearch onSearch={() => setShowSearch(false)} />
+                <LocationSearch onSearch={() => setShowSearch(false)} showRecent={true} />
             </SearchModal>
         </Container>
     );
@@ -82,7 +82,7 @@ function DayWeatherData({weatherData}) {
         <div style={{overflow: "hidden"}} className='rounded'>
             {weatherData?.map(d =>
                 <Row key={d.time} className='p-2'
-                     style={{backgroundImage: `linear-gradient(90deg, rgba(58, ${78 * (.18 * d.wpgt)} , 204, .8), rgba(0, 0, 0, .024) 17%`,
+                     style={{backgroundImage: `linear-gradient(90deg, rgba(58, ${15.6 * d.wspd} , 204, .8), rgba(0, 0, 0, .024) 17%`,
                      borderBottom: "solid rgba(255, 255, 255, .4) 2px"}}
                 >
                     <WeatherDataPoint value={(new Date(d.time).getHours())} width={1} />
