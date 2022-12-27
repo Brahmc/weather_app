@@ -1,4 +1,4 @@
-import {LocationSearch} from "../components/LocationSearch";
+import {LocationSearch} from "../components/search/LocationSearch";
 
 export function SearchPage() {
     return (

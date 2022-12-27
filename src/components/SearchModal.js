@@ -1,6 +1,6 @@
 import {Button, Modal} from "react-bootstrap";
 import {useState} from "react";
-import {LocationSearch} from "../components/LocationSearch";
+import {LocationSearch} from "./search/LocationSearch";
 
 export function SearchModal({title}) {
     const [showSearch, setShowSearch] = useState(false);
