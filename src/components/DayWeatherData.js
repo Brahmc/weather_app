@@ -1,5 +1,6 @@
 import {Col, Row} from "react-bootstrap";
 import {WiDirectionUp} from "react-icons/wi";
+import {WeatherDataPoint} from "../components/WeatherDataPoint";
 
 export function DayWeatherData({weatherData}) {
     return (
@@ -27,11 +28,3 @@ export function DayWeatherData({weatherData}) {
     )
 }
 
-function WeatherDataPoint({value, note, style, width}) {
-    return (
-        <Col xs={width ? width : 5} style={style} className='d-flex justify-content-center flex-column'>
-            {note ? <Row>{value}</Row> : value}
-            {note ? <Row style={{fontSize: ".7em"}}>{note}</Row> : ''}
-        </Col>
-    )
-}
