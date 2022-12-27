@@ -20,14 +20,15 @@ export function useCurrentLocationData() {
             }
         }
 
-        fetch("https://meteostat.p.rapidapi.com/point/hourly?" + new URLSearchParams({
+        const searchParams = {
             lat: location.center[1],
             lon: location.center[0],
             start: formatDate(date),
             end: formatDate(date),
-            alt: '113',
             tz: "Europe/Berlin"
-        }), options)
+        }
+
+        fetch("https://meteostat.p.rapidapi.com/point/hourly?" + new URLSearchParams(searchParams), options)
             .then(response => response.json())
             .then(data => {setLocationWeather(data); console.log(data)});
 
