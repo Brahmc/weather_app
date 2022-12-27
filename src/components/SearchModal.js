@@ -1,15 +1,23 @@
-import {Modal} from "react-bootstrap";
+import {Button, Modal} from "react-bootstrap";
+import {useState} from "react";
+import {LocationSearch} from "../components/LocationSearch";
 
-export function SearchModal({title, show, setShow, children}) {
-    const handleClose = () => setShow(false);
+export function SearchModal({title}) {
+    const [showSearch, setShowSearch] = useState(false);
+    const handleClose = () => setShowSearch(false);
 
     return (
-        <Modal show={show} onHide={handleClose} >
-            <Modal.Header closeButton>
-                <Modal.Title>{title}</Modal.Title>
-            </Modal.Header>
-            {children}
-            <Modal.Footer />
-        </Modal>
+        <>
+            <Button className='me-2' variant="primary" onClick={() => setShowSearch(true)}>
+                {title}
+            </Button>
+            <Modal show={showSearch} onHide={handleClose} >
+                <Modal.Header closeButton>
+                    <Modal.Title>{title}</Modal.Title>
+                </Modal.Header>
+                <LocationSearch onSearch={() => setShowSearch(false)} showRecent={true} />
+                <Modal.Footer />
+            </Modal>
+        </>
     );
 }

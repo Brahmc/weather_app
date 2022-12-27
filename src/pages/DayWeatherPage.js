@@ -1,6 +1,5 @@
 import {Button, Col, Container} from "react-bootstrap";
 import {useEffect, useState} from "react";
-import {LocationSearch} from "../components/LocationSearch";
 import {SearchModal} from "../components/SearchModal";
 import {useLocationContext} from "../contexts/locationContext";
 import {FaArrowLeft, FaArrowRight} from "react-icons/fa";
@@ -8,7 +7,7 @@ import {DayWeatherData} from "../components/DayWeatherData";
 
 export function DayWeatherPage() {
     const {location} = useLocationContext();
-    const [showSearch, setShowSearch] = useState(false);
+
     const [locationWeather, setLocationWeather] = useState(undefined);
     const [date, setDate] = useState(new Date());
 
@@ -57,17 +56,11 @@ export function DayWeatherPage() {
                 <Button className='me-2' onClick={() => addDays(1)}>
                     <FaArrowRight />
                 </Button>
-                <Button className='me-2' variant="primary" onClick={() => setShowSearch(!showSearch)}>
-                    Search
-                </Button>
+                <SearchModal title='Search'/>
             </Col>
 
             <span>{date.toDateString()}</span>
             <DayWeatherData weatherData={locationWeather?.data} />
-
-            <SearchModal title='Search' show={showSearch} setShow={setShowSearch}>
-                <LocationSearch onSearch={() => setShowSearch(false)} showRecent={true} />
-            </SearchModal>
         </Container>
     );
 }
