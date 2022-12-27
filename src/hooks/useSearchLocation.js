@@ -1,11 +1,11 @@
 import {useEffect, useState} from "react";
 import {useLocationContext} from "../contexts/locationContext";
-import {useLocalStorage} from "../hooks/useLocalStorage";
+import {useRecentLocations} from "../hooks/useRecentLocations";
 
 export function useSearchLocation(onSearch) {
     const[search, setSearch] = useState("");
     const [locations, setLocations] = useState(undefined);
-    const [recentLocations, setRecentLocations] = useLocalStorage('recentLocations', []);
+    const {addRecentLocation} = useRecentLocations();
     const {setLocation} = useLocationContext();
 
     useEffect(() => {
@@ -20,13 +20,9 @@ export function useSearchLocation(onSearch) {
 
     function searchLocation(location) {
         if(onSearch) onSearch();
-
-        const newRecent = recentLocations.filter(l => l.id !== location.id);
-        if(newRecent.length >= 4) newRecent.pop();
-        setRecentLocations([...newRecent, location]);
-
+        addRecentLocation(location);
         setLocation(location);
     }
 
-    return [search, setSearch, locations, recentLocations.reverse(), searchLocation];
+    return [search, setSearch, locations, searchLocation];
 }

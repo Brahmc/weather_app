@@ -1,8 +1,10 @@
 import {Container, Form} from "react-bootstrap";
 import {useSearchLocation} from "../hooks/useSearchLocation";
+import {useRecentLocations} from "../hooks/useRecentLocations";
 
 export function LocationSearch({onSearch, showRecent}) {
-    const [search, setSearch, locations, recentLocations, searchLocation] = useSearchLocation(onSearch);
+    const [search, setSearch, locations, searchLocation] = useSearchLocation(onSearch);
+    const {recentLocations} = useRecentLocations();
 
     return (
         <Container style={{textAlign: "left"}}>
