@@ -14,7 +14,7 @@ export function DayWeatherData({weatherData}) {
             <div style={{overflow: "hidden"}} className='rounded'>
                 {weatherData?.map(d =>
                     <Row key={d.time} className='p-2'
-                         style={{backgroundImage: `linear-gradient(90deg, rgba(58, ${15.6 * d.wspd} , 204, .8), rgba(0, 0, 0, .024) 17%`,
+                         style={{backgroundImage: `linear-gradient(90deg, rgba(${d.wspd < 20 ? 58 : 15 * (d.wspd - 20)}, ${15.6 * d.wspd} , ${d.wspd < 20 ? 204 : 204 - 4 * d.wspd}, .8), rgba(0, 0, 0, .024) 17%`,
                              borderBottom: "solid rgba(255, 255, 255, .4) 2px"}}
                     >
                         <WeatherDataPoint value={(new Date(d.time).getHours())} width={1} />
